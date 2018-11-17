@@ -86,6 +86,7 @@ public class Leitura {
                                 LocalTime lt2 = converteStringToDateTime(valores[5]);
                                 Aeroporto a1 = findAeroporto(valores[2],vertices);
                                 Aeroporto a2 = findAeroporto(valores[4],vertices);
+                                a1.addListAdj(a2);
                                 long distancia = c.distanciaPontos(a1.getPosition(),a2.getPosition());
                                 Voo v = new Voo(valores[0],valores[1],a1,lt1,a2,lt2,Integer.parseInt(valores[7]),distancia);
                                 listaVoos.add(v);

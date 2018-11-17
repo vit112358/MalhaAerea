@@ -73,6 +73,17 @@ public class Controls {
         }
         return result;
     }
+    
+    public List<Voo> buscaVoos(List<Voo> voos, String origem, String destino){
+        List<Voo> result = new ArrayList<>();
+        for (Voo v: voos
+             ) {
+            if(v.getOrigem().getAbreviation().equals(origem) && v.getDestino().getAbreviation().equals(destino)){
+                result.add(v);
+            }
+        }
+        return result;
+    }
 
     /**
      * Retorna a viagem verificando tanto a menor distancia quanto a menor duracao,

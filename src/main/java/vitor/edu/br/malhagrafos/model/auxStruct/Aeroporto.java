@@ -1,5 +1,7 @@
 package vitor.edu.br.malhagrafos.model.auxStruct;
 
+import java.util.ArrayList;
+import java.util.List;
 import vitor.edu.br.malhagrafos.control.graphOp.Ponto;
 
 public class Aeroporto {
@@ -8,6 +10,7 @@ public class Aeroporto {
     private String timeZoneGMT;
     private Ponto position;
     private String airportName;
+    private List<Aeroporto> listaAdj;
 
     /**
      *
@@ -21,6 +24,7 @@ public class Aeroporto {
         this.timeZoneGMT = timeZoneGMT;
         this.position = position;
         this.airportName = airportName;
+        this.listaAdj = new ArrayList<>();
     }
 
     public Aeroporto() {
@@ -58,6 +62,24 @@ public class Aeroporto {
         this.airportName = airportName;
     }
 
+    public List<Aeroporto> getListaAdj() {
+        return listaAdj;
+    }
+
+    public void setListaAdj(List<Aeroporto> listaAdj) {
+        this.listaAdj = listaAdj;
+    }
+
+    public boolean addListAdj(Aeroporto aeroporto){
+        if(aeroporto!=null){
+            if(!this.listaAdj.contains(aeroporto)){
+                if(this.listaAdj.add(aeroporto)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     @Override
     public String toString() {
         return "Aeroporto{" +
