@@ -49,17 +49,20 @@ public class Main {
                     GraphExport.createGraph(e);
                     break;
                 case 13:
-                    Aeroporto a1 = l.findAeroporto("ABQ", e.getRotas().getVertices());
-                    Aeroporto b1 = l.findAeroporto("BNA", e.getRotas().getVertices());
-                    Djikstra x = new Djikstra(e.getVoos(),e.getRotas());
-                    x.execute(a1);
-                    LinkedList<Aeroporto> path = x.getPath(b1);
-                    for (Aeroporto aeroporto : path) {
-                        System.out.println(aeroporto.toString());
+                    Aeroporto a1 = l.pedeAeroporto(e.getRotas().getVertices());
+                    Aeroporto b1 = l.pedeAeroporto(e.getRotas().getVertices());
+                    if((a1!=null) && (b1!=null)){
+                        Djikstra x = new Djikstra(e.getVoos(),e.getRotas());
+                        x.execute(a1);
+                        LinkedList<Aeroporto> path = x.getPath(b1);
+                        for (Aeroporto aeroporto : path) {
+                            System.out.println(aeroporto.toString());
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Aeroportos inválidos", "Entrada inválida", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
                 case 2:
-                    System.out.println("");
                     List<Voo> vs=c.buscaVoosDiretos(e);
                     for (Voo voo:vs) {
                         System.out.println(voo.toString());
