@@ -152,6 +152,10 @@ public class Leitura {
     public Aeroporto pedeAeroporto(Map<String, Vertex> vertices){
         String abreviation = JOptionPane.showInputDialog(null, "Digite a Sigla do Aeroporto", "");
         Aeroporto a = findAeroporto(abreviation, vertices);
-        return a;
+        if(a!=null){
+            return a;
+        }else{
+            throw new RuntimeException("Erro Aeroporto não Encontrado");
+        }
     }
 }

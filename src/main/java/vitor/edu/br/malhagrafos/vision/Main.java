@@ -73,64 +73,62 @@ public class Main {
                         c.menorCustoViagem(e.getVoos().getArestas(), origem, destino);
                     break;
                 case 4:
-                    Aeroporto abq = l.findAeroporto("ABQ", e.getRotas().getVertices());
-                    List<LinkedList<Aeroporto>> rotas = new ArrayList<>();
+                    Aeroporto aeroporto = l.pedeAeroporto(e.getRotas().getVertices());
+                    if(aeroporto!=null){
+                        List<LinkedList<Aeroporto>> rotas = new ArrayList<>();
 
-                    Iterator it = e.getRotas().getVertices().entrySet().iterator();
-                    Djikstra djikstra = new Djikstra(e.getVoos(),e.getRotas());
-                    while(it.hasNext()){
-                        Map.Entry par = (Map.Entry)it.next();
-                        Vertex aux = (Vertex) par.getValue();
-                        djikstra.execute(abq);
-                        if(!abq.equals(aux.getAeroporto())){
-                            LinkedList<Aeroporto> rota = djikstra.getPath(aux.getAeroporto());
-                            rotas.add(rota);
+                        Iterator it = e.getRotas().getVertices().entrySet().iterator();
+                        Djikstra djikstra = new Djikstra(e.getVoos(),e.getRotas());
+                        while(it.hasNext()){
+                            Map.Entry par = (Map.Entry)it.next();
+                            Vertex aux = (Vertex) par.getValue();
+                            djikstra.execute(aeroporto);
+                            if(!aeroporto.equals(aux.getAeroporto())){
+                                LinkedList<Aeroporto> rota = djikstra.getPath(aux.getAeroporto());
+                                rotas.add(rota);
+                            }
                         }
-                    }
-                    boolean verificaRota = false;
-                    for(LinkedList<Aeroporto> rota: rotas){
-                        if(rota == null){
-                            verificaRota = true;
-                            break;
+                        boolean verificaRota = false;
+                        for(LinkedList<Aeroporto> rota: rotas){
+                            if(rota == null){
+                                verificaRota = true;
+                                break;
+                            }
                         }
-                    }
 
-                    if(!verificaRota){
-                        JOptionPane.showMessageDialog(null, "Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis", "Mensagem", JOptionPane.OK_OPTION);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Este Aeroporto não consegue levar a todos os outros", "Mensagem", JOptionPane.ERROR_MESSAGE);
-                    }
-                    List<Aeroporto> escalas = new ArrayList<>();
-                    for(LinkedList<Aeroporto> rota: rotas){
-                        if(rota.size()>2){
-                            for(int i=1; i<rota.size()-1;i++){
-                                if(!escalas.contains(rota.get(i))){
-                                    escalas.add(rota.get(i));
+                        if(!verificaRota){
+                            JOptionPane.showMessageDialog(null, "Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis", "Mensagem", JOptionPane.OK_OPTION);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Este Aeroporto não consegue levar a todos os outros", "Mensagem", JOptionPane.ERROR_MESSAGE);
+                        }
+                        List<Aeroporto> escalas = new ArrayList<>();
+                        for(LinkedList<Aeroporto> rota: rotas){
+                            if(rota.size()>2){
+                                for(int i=1; i<rota.size()-1;i++){
+                                    if(!escalas.contains(rota.get(i))){
+                                        escalas.add(rota.get(i));
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    for (Aeroporto escala : escalas) {
-                        System.out.println(escala.toString());
+                        for (Aeroporto escala : escalas) {
+                            System.out.print(escala.getAbreviation()+"->");
+                        }
                     }
 
                     break;
                 case 5:
-                    Aeroporto a = l.findAeroporto("ABQ", e.getRotas().getVertices());
+                    Aeroporto a = l.pedeAeroporto(e.getRotas().getVertices());
 
-                    Caixeiro ca = new Caixeiro();
-                    ca.montaRotas(e.getVoos(),e.getRotas(), a);
+                    if(a!=null){
+                        Caixeiro ca = new Caixeiro();
+                        ca.montaRotas(e.getVoos(),e.getRotas(), a);
+                    }
                     break;
                 case 0:
                     break;
             }
         }
-    }
-    
-    private File getFile(String fileName) {
-	//Get file from resources folder
-	ClassLoader classLoader = getClass().getClassLoader();
-	return new File(classLoader.getResource(fileName).getFile());
     }
 }
