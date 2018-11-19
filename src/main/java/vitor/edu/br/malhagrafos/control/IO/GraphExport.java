@@ -47,9 +47,9 @@ public class GraphExport {
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jfc.showOpenDialog(null);
         String pasta = jfc.getSelectedFile().getAbsolutePath();
-        System.out.println(pasta+"\\grafoRotas." + type);
-        //File out = new File(pasta+"\\grafoRotas." + type);   // out.gif in this example  // out.gif in this example
-        File out = new File("C:\\Users\\vitor\\Desktop\\grafoRotas.png");
+        //System.out.println(pasta+"\\grafoRotas." + type);
+        File out = new File(pasta+"\\grafoRotas." + type);   // out.gif in this example  // out.gif in this example
+        //File out = new File("C:\\Users\\vitor\\Desktop\\grafoRotas.png");
         //gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
         gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type,  "dot"), out);
     }
