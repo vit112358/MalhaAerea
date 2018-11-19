@@ -24,10 +24,10 @@ import vitor.edu.br.malhagrafos.model.graphVoos.GraphVoo;
  */
 public class TableExport {
     
-    private static HSSFWorkbook workbookRoute = new HSSFWorkbook();
-    private static HSSFWorkbook workbookFly = new HSSFWorkbook();
-    private static HSSFSheet sheetRoute = workbookRoute.createSheet("TableRoute");
-    private static HSSFSheet sheetFly = workbookFly.createSheet("TableFly");
+    private static final HSSFWorkbook workbookRoute = new HSSFWorkbook();
+    private static final HSSFWorkbook workbookFly = new HSSFWorkbook();
+    private static final HSSFSheet sheetRoute = workbookRoute.createSheet("TableRoute");
+    private static final HSSFSheet sheetFly = workbookFly.createSheet("TableFly");
     private static int rownumR= 0;
     private static int cellnumR = 0;
     private static int rownumF= 0;
@@ -243,7 +243,7 @@ public class TableExport {
     private static void gerarXLS(String name, int flag){
         try {
             try ( //Escrevendo o arquivo em disco
-                    FileOutputStream out = new FileOutputStream(new File("C:\\Users\\patri\\Documents\\IFMG\\6_Periodo\\TrabalhoMalhaGrafos\\src\\main\\resources\\output\\"+name+".xls"))) {
+                    FileOutputStream out = new FileOutputStream(new File(name+".xls"))) {
                 if(flag==1){
                     workbookRoute.write(out);
                 }else{

@@ -115,7 +115,9 @@ public class Controls {
                 viagens.add(voo);
             }
         }
-
+        
+        if(!viagens.isEmpty()){
+            
         // viagens partindo da origem e destino escolhidos
         for (Voo viagem : viagens) {
             if (viagem.getDistancia() < menorDistancia) {
@@ -137,6 +139,9 @@ public class Controls {
             }
         }
 
+        System.out.println();
+        System.out.println("Aeroport de Origem :"+origem);
+        System.out.println("Aeroport de Destino :"+destino);
         System.out.println("Viagem menor distância e duração: " + vooMenorDistanciaEDuracao.toString());
         System.out.println("Distância: " + vooMenorDistanciaEDuracao.getDistancia() + "km");
         System.out.println("Duração: " + menorDur + " min");
@@ -146,6 +151,16 @@ public class Controls {
         System.out.println();
         System.out.println("Viagem menor duração: " + vooMenorDuracao.toString());
         System.out.println("Duração: " + menorDur + " min");
+        
+        } else {
+            
+            System.out.println();
+            System.out.println("Aeroport de Origem :"+origem);
+            System.out.println("Aeroport de Destino :"+destino);
+            System.out.println("Não foi encontrado viagens com a origem e destino solicitados ! :( ");
+            System.out.println();
+            
+        }
 
 
     }
