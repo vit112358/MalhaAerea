@@ -1,13 +1,8 @@
 package vitor.edu.br.malhagrafos.vision;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import javax.swing.JOptionPane;
+import vitor.edu.br.malhagrafos.control.IO.GraphExport;
 import vitor.edu.br.malhagrafos.control.IO.Leitura;
+import vitor.edu.br.malhagrafos.control.IO.TableExport;
 import vitor.edu.br.malhagrafos.control.graphOp.Controls;
 import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Caixeiro;
 import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Djikstra;
@@ -15,6 +10,14 @@ import vitor.edu.br.malhagrafos.model.Estrutura;
 import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
 import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
 import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
+
+import javax.swing.JOptionPane;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -31,7 +34,8 @@ public class Main {
         System.out.println("\n");
         System.out.println("==================================Menu============================================");
         System.out.println("==============11 -> Mostrar Rotas e Voos ========================================");
-        System.out.println("==============12 -> Mostrar Rota enre 2 aeroportos ==============================");
+        System.out.println("==============12 -> Gerar gráfico de rotas e tabelas de rotas e voos ==============================");
+        System.out.println("==============13 -> Mostrar Rota enre 2 aeroportos ==============================");
         System.out.println("==============2 -> Mostrar Voos Diretos ==========================================");
         System.out.println("==============3 -> Viagem de Menor Custo entre 2 destinos ========================");
         System.out.println("==============4 -> Cobertura de Aeroportos =======================================");
@@ -41,13 +45,9 @@ public class Main {
         while(op!=0){
             op = Integer.parseInt(JOptionPane.showInputDialog("Digite o Código"));
             switch (op){
-                case 11:
-                    break;
                 case 12:
-                    List<Voo> v=c.buscaVoosDiretos(e);
-                    v.forEach((voo) -> {
-                        System.out.println(voo.toString());
-                    });
+                    TableExport.exportExcel(e);
+                    GraphExport.createGraph(e);
                     break;
                 case 13:
                     Aeroporto a1 = l.findAeroporto("ABQ", e.getRotas().getVertices());
@@ -58,16 +58,25 @@ public class Main {
                     for (Aeroporto aeroporto : path) {
                         System.out.println(aeroporto.toString());
                     }
-                    break;    
+                    break;
                 case 2:
+                    System.out.println("");
+                    List<Voo> vs=c.buscaVoosDiretos(e);
+                    for (Voo voo:vs) {
+                        System.out.println(voo.toString());
+                    }
                     break;
                 case 3:
-                    c.menorCustoViagem(e.getVoos().getArestas(), "ABQ", "ATL");
+                    String origem = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de origem");
+                    String destino = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de destino");
+                    System.out.println("");
+                    if(origem != null  && destino !=null)
+                        c.menorCustoViagem(e.getVoos().getArestas(), origem, destino);
                     break;
                 case 4:
                     Aeroporto abq = l.findAeroporto("ABQ", e.getRotas().getVertices());
                     List<LinkedList<Aeroporto>> rotas = new ArrayList<>();
-                    
+
                     Iterator it = e.getRotas().getVertices().entrySet().iterator();
                     Djikstra djikstra = new Djikstra(e.getVoos(),e.getRotas());
                     while(it.hasNext()){
@@ -86,7 +95,7 @@ public class Main {
                             break;
                         }
                     }
-                    
+
                     if(!verificaRota){
                         JOptionPane.showMessageDialog(null, "Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis", "Mensagem", JOptionPane.OK_OPTION);
                     }else{
@@ -102,17 +111,17 @@ public class Main {
                             }
                         }
                     }
-                    
+
                     for (Aeroporto escala : escalas) {
                         System.out.println(escala.toString());
                     }
-                    
+
                     break;
                 case 5:
                     Aeroporto a = l.findAeroporto("ABQ", e.getRotas().getVertices());
-                    
+
                     Caixeiro ca = new Caixeiro();
-                    ca.montaRotas(e.getVoos(),e.getRotas(), a);                                       
+                    ca.montaRotas(e.getVoos(),e.getRotas(), a);
                     break;
                 case 0:
                     break;
