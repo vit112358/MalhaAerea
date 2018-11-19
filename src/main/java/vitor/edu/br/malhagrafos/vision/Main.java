@@ -28,13 +28,12 @@ public class Main {
         Estrutura e = l.readFile("voos.txt");
         Controls c = new Controls();
 
-        System.out.println("==============Programa de Demonstração de Rotas Aéreas============================");
+        System.out.println("==============Programa de Demonstração de Rotas Aéreas===========================");
         System.out.println("\n");
-        System.out.println("==============Por Vitor Fernandes e Patricia Pieroni==============================");
+        System.out.println("==============Por Vitor Fernandes e Patricia Pieroni=============================");
         System.out.println("\n");
-        System.out.println("==================================Menu============================================");
-        System.out.println("==============11 -> Mostrar Rotas e Voos ========================================");
-        System.out.println("==============12 -> Gerar gráfico de rotas e tabelas de rotas e voos ==============================");
+        System.out.println("==================================Menu===========================================");
+        System.out.println("==============12 -> Gerar gráfico de rotas e tabelas de rotas e voos ============");
         System.out.println("==============13 -> Mostrar Rota enre 2 aeroportos ==============================");
         System.out.println("==============2 -> Mostrar Voos Diretos ==========================================");
         System.out.println("==============3 -> Viagem de Menor Custo entre 2 destinos ========================");
