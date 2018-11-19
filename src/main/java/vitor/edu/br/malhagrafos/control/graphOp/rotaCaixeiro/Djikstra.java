@@ -52,8 +52,7 @@ public class Djikstra {
             findMinimalTime(node);
         }
     }
-    
-    
+
     private void findMinimalTime(Aeroporto node) {
         List<Aeroporto> adjacentNodes = getNeighbors(node);
         for (Aeroporto target : adjacentNodes) {
@@ -67,8 +66,7 @@ public class Djikstra {
         }
 
     }
-    
-    
+
     private List<Aeroporto> getNeighbors(Aeroporto node) {
         List<Aeroporto> neighbors = new ArrayList<Aeroporto>();
         for (Voo edge : edges) {
@@ -90,9 +88,6 @@ public class Djikstra {
         throw new RuntimeException("Should not happen");
     }
 
-    
-    
-    
     private Aeroporto getMinimum(Set<Aeroporto> vertexes) {
         Aeroporto minimum = null;
         for (Aeroporto vertex : vertexes) {
@@ -106,12 +101,7 @@ public class Djikstra {
         }
         return minimum;
     }
-    
-    
-    
-    
-    
-    
+
     private boolean isSettled(Aeroporto vertex) {
         return settledNodes.contains(vertex);
     }
