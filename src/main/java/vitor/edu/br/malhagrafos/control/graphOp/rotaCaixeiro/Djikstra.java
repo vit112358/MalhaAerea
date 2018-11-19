@@ -1,7 +1,12 @@
 package vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro;
 
-import com.sun.javafx.geom.Edge;
-import java.time.LocalTime;
+import vitor.edu.br.malhagrafos.control.graphOp.Controls;
+import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
+import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
+import vitor.edu.br.malhagrafos.model.graphRota.Graph;
+import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
+import vitor.edu.br.malhagrafos.model.graphVoos.GraphVoo;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,12 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import vitor.edu.br.malhagrafos.control.graphOp.Controls;
-import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
-import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
-import vitor.edu.br.malhagrafos.model.graphRota.Graph;
-import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
-import vitor.edu.br.malhagrafos.model.graphVoos.GraphVoo;
 
 /**
  *
