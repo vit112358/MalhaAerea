@@ -6,14 +6,12 @@
 package vitor.edu.br.malhagrafos.utils;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.util.Properties;
 
 /**
  *
@@ -141,7 +139,7 @@ public class GraphViz {
      * Returns the graph's source description in dot language.
      * @return Source of the graph in dot language.
      */
-    public String getDotSource() {
+    public String getDotSource() {   
         return this.graph.toString();
     }
 

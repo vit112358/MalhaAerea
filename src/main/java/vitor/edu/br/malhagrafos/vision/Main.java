@@ -5,18 +5,15 @@ import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.GeneticAlgorithm;
 import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Populacao;
 import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.RotaManager;
 import vitor.edu.br.malhagrafos.control.IO.Leitura;
-import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
 import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
 import vitor.edu.br.malhagrafos.model.Estrutura;
 import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
-
 import javax.swing.JOptionPane;
 import java.io.File;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import vitor.edu.br.malhagrafos.control.IO.GraphExport;
+import vitor.edu.br.malhagrafos.control.IO.TableExport;
 
 public class Main {
 
@@ -32,33 +29,45 @@ public class Main {
         System.out.println("==============Por Vitor Fernandes e Patricia Pieroni==============================");
         System.out.println("\n");
         System.out.println("==================================Menu============================================");
-        System.out.println("==============11 -> Mostrar Rotas e Voos ========================================");
-        System.out.println("==============12 -> Mostrar Rota enre 2 aeroportos ==============================");
+        System.out.println("==============12 -> Gerar gráfico de rotas e tabelas de rotas e voos ================");
+        System.out.println("==============13 -> Mostrar Rota enre 2 aeroportos ==============================");
         System.out.println("==============2 -> Mostrar Voos Diretos ==========================================");
         System.out.println("==============3 -> Viagem de Menor Custo entre 2 destinos ========================");
         System.out.println("==============4 -> Cobertura de Aeroportos =======================================");
         System.out.println("==============5 -> Tempo Minímo ==================================================");
         System.out.println("==============0 -> Sair ==========================================================");
         int op=-1;
+          
+        
+     
         while(op!=0){
             op = Integer.parseInt(JOptionPane.showInputDialog("Digite o Código"));
             switch (op){
-                case 11:
-                    break;
                 case 12:
+               
+                    TableExport.exportExcel(e);
+                    GraphExport.createGraph(e);
+                    break;
+                case 13:
+                    break;
+                case 2:
+                    System.out.println("");
                     List<Voo> v=c.buscaVoosDiretos(e);
                     for (Voo voo:v) {
                         System.out.println(voo.toString());
                     }
                     break;
-                case 2:
-                    break;
                 case 3:
-                    c.menorCustoViagem(e.getVoos().getArestas(), "ABQ", "ATL");
+                    String origem = JOptionPane.showInputDialog("Informe a origem");
+                    String destino = JOptionPane.showInputDialog("Informe o destino");
+                    System.out.println("");
+                    if(origem != null  && destino !=null)
+                        c.menorCustoViagem(e.getVoos().getArestas(), origem, destino);
                     break;
                 case 4:
                     break;
                 case 5:
+                    System.out.println("");
                     for (Map.Entry<String, Vertex> aeroporo: e.getRotas().getVertices().entrySet()) {
                         RotaManager.addAirport(aeroporo.getValue().getAeroporto());
                     }
@@ -83,7 +92,7 @@ public class Main {
             }
         }
     }
-    
+
     private File getFile(String fileName) {
 	//Get file from resources folder
 	ClassLoader classLoader = getClass().getClassLoader();
