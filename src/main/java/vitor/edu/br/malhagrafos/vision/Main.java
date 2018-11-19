@@ -58,8 +58,8 @@ public class Main {
                     }
                     break;
                 case 3:
-                    String origem = JOptionPane.showInputDialog("Informe a origem");
-                    String destino = JOptionPane.showInputDialog("Informe o destino");
+                    String origem = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de origem");
+                    String destino = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de destino");
                     System.out.println("");
                     if(origem != null  && destino !=null)
                         c.menorCustoViagem(e.getVoos().getArestas(), origem, destino);
