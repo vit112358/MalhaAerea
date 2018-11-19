@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import vitor.edu.br.malhagrafos.model.Estrutura;
 import vitor.edu.br.malhagrafos.utils.GraphViz;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Patricia Pieroni
@@ -39,14 +41,16 @@ public class GraphExport {
         
         gv.addln(gv.end_graph());
         System.out.println(gv.getDotSource());
-        
-    String type = "png";
-    File out = new File("C:\\Users\\patri\\Documents\\NetBeansProjects\\MalhaAerea\\src\\main\\resources\\grafoRotas." + type);   // out.gif in this example
-    //gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
-    gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type,  "dot"), out);
-     
+
+        String type = "png";
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jfc.showOpenDialog(null);
+        String pasta = jfc.getSelectedFile().getAbsolutePath();
+        //System.out.println(pasta+"\\grafoRotas." + type);
+        File out = new File(pasta+"\\grafoRotas." + type);   // out.gif in this example  // out.gif in this example
+        //File out = new File("C:\\Users\\vitor\\Desktop\\grafoRotas.png");
+        //gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out );
+        gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type,  "dot"), out);
     }
-    
-   
-    
 }
