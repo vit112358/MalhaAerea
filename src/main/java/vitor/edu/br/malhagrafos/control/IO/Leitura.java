@@ -86,7 +86,8 @@ public class Leitura {
                                 LocalTime lt2 = converteStringToDateTime(valores[5]);
                                 Aeroporto a1 = findAeroporto(valores[2],vertices);
                                 Aeroporto a2 = findAeroporto(valores[4],vertices);
-                                a1.addListAdj(a2);
+                                Long t = c.calculaDiferencaTempo(lt1, lt2);
+                                a1.addDestination(t, a2);
                                 long distancia = c.distanciaPontos(a1.getPosition(),a2.getPosition());
                                 Voo v = new Voo(valores[0],valores[1],a1,lt1,a2,lt2,Integer.parseInt(valores[7]),distancia);
                                 listaVoos.add(v);
@@ -144,7 +145,17 @@ public class Leitura {
         return  LocalTime.of(pHora,pMin);
     }
 
-    private Aeroporto findAeroporto(String codAeroporto, Map<String, Vertex> vertices){
+    public Aeroporto findAeroporto(String codAeroporto, Map<String, Vertex> vertices){
         return vertices.get(codAeroporto).getAeroporto();
+    }
+    
+    public Aeroporto pedeAeroporto(Map<String, Vertex> vertices){
+        String abreviation = JOptionPane.showInputDialog(null, "Digite a Sigla do Aeroporto", "");
+        Aeroporto a = findAeroporto(abreviation, vertices);
+        if(a!=null){
+            return a;
+        }else{
+            throw new RuntimeException("Erro Aeroporto não Encontrado");
+        }
     }
 }

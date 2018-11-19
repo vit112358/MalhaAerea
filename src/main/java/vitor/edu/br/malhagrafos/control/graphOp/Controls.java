@@ -54,11 +54,9 @@ public class Controls {
      * @return A diferença entre 2 horas em minutos
      */
     public long calculaDiferencaTempo(LocalTime a, LocalTime b){
-        long result=(long)0;
-        if(a.toNanoOfDay()>b.toNanoOfDay()){
-            result = Duration.between(b,a).toMinutes();
-        }else{
-            result = Duration.between(a,b).toMinutes();
+        long result = Duration.between(b,a).toMinutes();
+        if(result < 0){
+            result = result*-1;
         }
         return result;
     }
