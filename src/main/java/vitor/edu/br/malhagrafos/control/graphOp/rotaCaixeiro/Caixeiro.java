@@ -78,7 +78,7 @@ public class Caixeiro {
             x.execute(nextOrigin);
             path = x.getPath(proxDestiny);
             
-            if(path.isEmpty()){
+            if(!path.isEmpty()){
                 for (Aeroporto aeroporto : path) {
                 Vertex aux = new Vertex();
                 for (Vertex v : aeroportos) {
@@ -98,10 +98,14 @@ public class Caixeiro {
                 if(aeroportos.isEmpty()){
                     terminou = true;
                 }
+            }else{
+                if(aeroportos.isEmpty()){
+                    terminou = true;
+                }
             }
         }
 
         System.out.println("Teste");
         return result;
     }
-    }
+}

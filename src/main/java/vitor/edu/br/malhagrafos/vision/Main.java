@@ -1,22 +1,20 @@
 package vitor.edu.br.malhagrafos.vision;
 
-import vitor.edu.br.malhagrafos.control.graphOp.Controls;
-import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.GeneticAlgorithm;
-import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Populacao;
-import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.RotaManager;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JOptionPane;
 import vitor.edu.br.malhagrafos.control.IO.Leitura;
+import vitor.edu.br.malhagrafos.control.graphOp.Controls;
+import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Caixeiro;
+import vitor.edu.br.malhagrafos.control.graphOp.rotaCaixeiro.Djikstra;
+import vitor.edu.br.malhagrafos.model.Estrutura;
 import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
 import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
-import vitor.edu.br.malhagrafos.model.Estrutura;
 import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
-
-import javax.swing.JOptionPane;
-import java.io.File;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class Main {
 
@@ -47,36 +45,74 @@ public class Main {
                     break;
                 case 12:
                     List<Voo> v=c.buscaVoosDiretos(e);
-                    for (Voo voo:v) {
+                    v.forEach((voo) -> {
                         System.out.println(voo.toString());
-                    }
+                    });
                     break;
+                case 13:
+                    Aeroporto a1 = l.findAeroporto("ABQ", e.getRotas().getVertices());
+                    Aeroporto b1 = l.findAeroporto("BNA", e.getRotas().getVertices());
+                    Djikstra x = new Djikstra(e.getVoos(),e.getRotas());
+                    x.execute(a1);
+                    LinkedList<Aeroporto> path = x.getPath(b1);
+                    for (Aeroporto aeroporto : path) {
+                        System.out.println(aeroporto.toString());
+                    }
+                    break;    
                 case 2:
                     break;
                 case 3:
                     c.menorCustoViagem(e.getVoos().getArestas(), "ABQ", "ATL");
                     break;
                 case 4:
+                    Aeroporto abq = l.findAeroporto("ABQ", e.getRotas().getVertices());
+                    List<LinkedList<Aeroporto>> rotas = new ArrayList<>();
+                    
+                    Iterator it = e.getRotas().getVertices().entrySet().iterator();
+                    Djikstra djikstra = new Djikstra(e.getVoos(),e.getRotas());
+                    while(it.hasNext()){
+                        Map.Entry par = (Map.Entry)it.next();
+                        Vertex aux = (Vertex) par.getValue();
+                        djikstra.execute(abq);
+                        if(!abq.equals(aux.getAeroporto())){
+                            LinkedList<Aeroporto> rota = djikstra.getPath(aux.getAeroporto());
+                            rotas.add(rota);
+                        }
+                    }
+                    boolean verificaRota = false;
+                    for(LinkedList<Aeroporto> rota: rotas){
+                        if(rota == null){
+                            verificaRota = true;
+                            break;
+                        }
+                    }
+                    
+                    if(!verificaRota){
+                        JOptionPane.showMessageDialog(null, "Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis", "Mensagem", JOptionPane.OK_OPTION);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Este Aeroporto não consegue levar a todos os outros", "Mensagem", JOptionPane.ERROR_MESSAGE);
+                    }
+                    List<Aeroporto> escalas = new ArrayList<>();
+                    for(LinkedList<Aeroporto> rota: rotas){
+                        if(rota.size()>2){
+                            for(int i=1; i<rota.size()-1;i++){
+                                if(!escalas.contains(rota.get(i))){
+                                    escalas.add(rota.get(i));
+                                }
+                            }
+                        }
+                    }
+                    
+                    for (Aeroporto escala : escalas) {
+                        System.out.println(escala.toString());
+                    }
+                    
                     break;
                 case 5:
-                    for (Map.Entry<String, Vertex> aeroporo: e.getRotas().getVertices().entrySet()) {
-                        RotaManager.addAirport(aeroporo.getValue().getAeroporto());
-                    }
-
-                    Populacao p = new Populacao(50, true, e);
-
-                    System.out.println("Distância inicial: " + (int)p.getFittest().getDistance());
-
-                    //Evoluí a população por 200 gerações
-                    for (int i = 0; i < 200; i++) {
-                        p = GeneticAlgorithm.evolvePopulation(p);
-                    }
-
-                    //Imprime o comprimento da melhor rota da população final
-                    System.out.println("Distância final: " + (int)p.getFittest().getDistance());
-                    //Imprime a solução encontrada para o problema
-                    System.out.println("Solução:");
-                    System.out.println(p.getFittest());
+                    Aeroporto a = l.findAeroporto("ABQ", e.getRotas().getVertices());
+                    
+                    Caixeiro ca = new Caixeiro();
+                    ca.montaRotas(e.getVoos(),e.getRotas(), a);                                       
                     break;
                 case 0:
                     break;
