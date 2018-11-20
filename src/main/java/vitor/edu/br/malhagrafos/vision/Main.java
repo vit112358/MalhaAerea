@@ -11,13 +11,8 @@ import vitor.edu.br.malhagrafos.model.auxStruct.Aeroporto;
 import vitor.edu.br.malhagrafos.model.auxStruct.Voo;
 import vitor.edu.br.malhagrafos.model.graphRota.Vertex;
 
-import javax.swing.JOptionPane;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import javax.swing.*;
+import java.util.*;
 
 public class Main {
 
@@ -45,10 +40,12 @@ public class Main {
             op = Integer.parseInt(JOptionPane.showInputDialog("Digite o Código"));
             switch (op){
                 case 12:
+                    System.out.println("REQUISITO 1.2");
                     TableExport.exportExcel(e);
                     GraphExport.createGraph(e);
                     break;
                 case 13:
+                    System.out.println("REQUISITO 1.3");
                     Aeroporto a1 = l.pedeAeroporto(e.getRotas().getVertices());
                     Aeroporto b1 = l.pedeAeroporto(e.getRotas().getVertices());
                     if((a1!=null) && (b1!=null)){
@@ -58,24 +55,40 @@ public class Main {
                         for (Aeroporto aeroporto : path) {
                             System.out.println(aeroporto.toString());
                         }
+
+                        System.out.println();
+                        System.out.println("Sequência de voos com origem no aeroporto: " + a1.getAbreviation());
+                        System.out.println("e destino no aeroporto: " + b1.getAbreviation());
+                        System.out.println();
+                        List<Voo> voos = e.getVoos().getArestas();
+                        for (Voo voo : voos) {
+
+                            if (voo.getOrigem().getAbreviation().equals(a1.getAbreviation()) &&
+                                    voo.getDestino().getAbreviation().equals(b1.getAbreviation())) {
+                                System.out.println(voo);
+                            }
+                        }
                     }else{
                         JOptionPane.showMessageDialog(null,"Aeroportos inválidos", "Entrada inválida", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
                 case 2:
+                    System.out.println("REQUISITO 2");
                     List<Voo> vs=c.buscaVoosDiretos(e);
                     for (Voo voo:vs) {
                         System.out.println(voo.toString());
                     }
                     break;
                 case 3:
+                    System.out.println("REQUISITO 3");
                     String origem = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de origem");
                     String destino = JOptionPane.showInputDialog("Informe a abreviação do aeroporto de destino");
-                    System.out.println("");
+                    System.out.println();
                     if(origem != null  && destino !=null)
                         c.menorCustoViagem(e.getVoos().getArestas(), origem, destino);
                     break;
                 case 4:
+                    System.out.println("REQUISITO 4");
                     Aeroporto aeroporto = l.pedeAeroporto(e.getRotas().getVertices());
                     if(aeroporto!=null){
                         List<LinkedList<Aeroporto>> rotas = new ArrayList<>();
@@ -123,6 +136,7 @@ public class Main {
 
                     break;
                 case 5:
+                    System.out.println("REQUISITO 5");
                     Aeroporto a = l.pedeAeroporto(e.getRotas().getVertices());
 
                     if(a!=null){
