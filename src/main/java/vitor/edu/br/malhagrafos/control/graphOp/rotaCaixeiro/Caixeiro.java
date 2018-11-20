@@ -104,8 +104,6 @@ public class Caixeiro {
                 }
             }
         }
-
-        System.out.println("Teste");
         return result;
     }
 }
