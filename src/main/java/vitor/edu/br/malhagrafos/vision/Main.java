@@ -100,9 +100,9 @@ public class Main {
                         }
 
                         if(!verificaRota){
-                            JOptionPane.showMessageDialog(null, "Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis", "Mensagem", JOptionPane.OK_OPTION);
+                            JOptionPane.showMessageDialog(null,"Este Aeroporto consegue chegar em todos os outros aeroportos disponíveis");
                         }else{
-                            JOptionPane.showMessageDialog(null, "Este Aeroporto não consegue levar a todos os outros", "Mensagem", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Este Aeroporto não consegue levar a todos os outros");
                         }
                         List<Aeroporto> escalas = new ArrayList<>();
                         for(LinkedList<Aeroporto> rota: rotas){
@@ -115,8 +115,9 @@ public class Main {
                             }
                         }
 
+                        System.out.println("Aeroportos que Afetam o Sistema Aéreo se Pararem: ");
                         for (Aeroporto escala : escalas) {
-                            System.out.print(escala.getAbreviation()+"->");
+                            System.out.println(escala.toString());
                         }
                     }
 
@@ -126,7 +127,13 @@ public class Main {
 
                     if(a!=null){
                         Caixeiro ca = new Caixeiro();
-                        ca.montaRotas(e.getVoos(),e.getRotas(), a);
+                        List<Aeroporto> rota = ca.montaRotas(e.getVoos(),e.getRotas(), a);
+
+                        System.out.println("Rota");
+                        for (Aeroporto aero:rota){
+                            System.out.print(aero.getAbreviation()+"->");
+                        }
+                        System.out.println("");
                     }
                     break;
                 case 0:
